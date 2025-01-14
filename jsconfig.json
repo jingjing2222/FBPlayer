@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "lib": ["esnext", "dom"],
+        "checkJs": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "types": ["vite/client", "module"]
+    },
+    "include": ["src/**/*.js", "src/**/*.jsx"],
+    "exclude": ["node_modules", "**/node_modules", "dist"]
+}
