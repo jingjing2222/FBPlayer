@@ -23,29 +23,33 @@ const defaultPosition = [
 export default function SelectPosition({ inputValueRef }) {
     const [selectedPositions, setSelectedPositions] = useState([]);
 
+    function addPosition(prevPositions, position) {
+        const updatedPositions = prevPositions.filter(
+            (existingPosition) => existingPosition !== position
+        );
+        const prevValue = inputValueRef.current;
+        inputValueRef.current = {
+            ...prevValue,
+            Position: updatedPositions,
+        };
+        return updatedPositions;
+    }
+    function deletePosition(prevPositions, position) {
+        const updatedPositions = [...prevPositions, position];
+        const prevValue = inputValueRef.current;
+        inputValueRef.current = {
+            ...prevValue,
+            Position: updatedPositions,
+        };
+        return updatedPositions;
+    }
+
     const togglePosition = (position) => {
+        // @ts-ignore
         setSelectedPositions((prevPositions) => {
-            if (prevPositions.includes(position)) {
-                const updatedPositions = prevPositions.filter(
-                    (existingPosition) => existingPosition !== position
-                );
-                const prevValue = inputValueRef.current;
-                inputValueRef.current = {
-                    ...prevValue,
-                    Position: updatedPositions,
-                };
-                console.log(inputValueRef.current);
-                return updatedPositions;
-            } else {
-                const updatedPositions = [...prevPositions, position];
-                const prevValue = inputValueRef.current;
-                inputValueRef.current = {
-                    ...prevValue,
-                    Position: updatedPositions,
-                };
-                console.log(inputValueRef.current);
-                return updatedPositions;
-            }
+            return prevPositions.includes(position)
+                ? addPosition(prevPositions, position)
+                : deletePosition(prevPositions, position);
         });
     };
 
@@ -62,7 +66,7 @@ export default function SelectPosition({ inputValueRef }) {
             </div>
             <div className="flex flex-row items-start">
                 <div className="flex-initial my-1 px-1 border-2">
-                    선택된 포지션
+                    {"선택된 포지션"}
                 </div>
                 <div className="flex-initial grid grid-cols-4">
                     {selectedPositions.map((position, idx) => {
