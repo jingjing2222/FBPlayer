@@ -1,6 +1,5 @@
 export default function SearchButton({
     handleSubmit,
-    setLoading,
     setInputValue,
     findByID,
 }) {
@@ -9,13 +8,12 @@ export default function SearchButton({
             className="flex-initial w-auto bg-slate-400"
             onClick={handleSubmit((data) => {
                 // @ts-ignore
-                setInputValue((prev) => {
-                    const newPrev = { ...prev, ...data };
-                    findByID(newPrev);
-                    console.log(newPrev);
-                    return newPrev;
+                setInputValue((prevValue) => {
+                    const newValue = { ...prevValue, ...data };
+                    findByID(newValue);
+                    console.log(newValue);
+                    return newValue;
                 });
-                setLoading(true);
             })}
         >
             제출

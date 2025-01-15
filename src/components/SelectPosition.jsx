@@ -20,11 +20,9 @@ const defaultPosition = [
     "ST",
 ];
 
-export default function Select({ setInputValue }) {
-    // 선택된 포지션 상태 관리
+export default function SelectPosition({ setInputValue }) {
     const [selectedPositions, setSelectedPositions] = useState([]);
 
-    // 포지션 추가/제거 함수
     const togglePosition = (position) => {
         setSelectedPositions((prevPositions) => {
             if (prevPositions.includes(position)) {
@@ -51,7 +49,6 @@ export default function Select({ setInputValue }) {
         <>
             <div className="grid grid-cols-4 gap-4">
                 {defaultPosition.map((position, idx) => (
-                    // eslint-disable-next-line react/jsx-key
                     <PositionButton
                         position={position}
                         togglePosition={togglePosition}
@@ -59,8 +56,23 @@ export default function Select({ setInputValue }) {
                     />
                 ))}
             </div>
-            {/* 선택된 포지션 출력 */}
-            <div>선택된 포지션: {selectedPositions.join(", ")}</div>
+            <div className="flex flex-row items-start">
+                <div className="flex-initial my-1 px-1 border-2">
+                    선택된 포지션
+                </div>
+                <div className="flex-initial grid grid-cols-4">
+                    {selectedPositions.map((position, idx) => {
+                        return (
+                            <span
+                                key={idx}
+                                className="px-1 m-1 border-2 bg-orange-400"
+                            >
+                                {position}
+                            </span>
+                        );
+                    })}
+                </div>
+            </div>
         </>
     );
 }

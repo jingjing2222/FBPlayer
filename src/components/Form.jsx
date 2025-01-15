@@ -1,62 +1,71 @@
+import InputName from "@/components/InputName";
 import SearchButton from "@/components/SearchButton";
-import Select from "@/components/Select";
+import SelectPosition from "@/components/SelectPosition";
 import ViewList from "@/components/ViewList";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 
 export default function Form() {
+    console.log("Form re-rendered");
     const [inputValue, setInputValue] = useState({
         "Full Name": "",
         Nationality: "",
         Position: [],
     });
     const [result, setResult] = useState([]);
-    const [loading, setLoading] = useState(false);
     const { register, handleSubmit } = useForm();
 
-    // @ts-ignore
-    async function findByID(newPrev) {
-        try {
-            const result = await fetch(
+    const mutation = useMutation({
+        mutationFn: async (newPrev) => {
+            const response = await fetch(
                 `http://localhost:3001/players/findByFilters`,
                 {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json", // JSON 데이터 전송
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(newPrev), // JSON 데이터 직렬화
+                    body: JSON.stringify(newPrev),
                 }
             );
 
-            if (!result.ok) {
-                throw new Error(`Error: ${result.status} ${result.statusText}`);
+            if (!response.ok) {
+                throw new Error(
+                    `Error: ${response.status} ${response.statusText}`
+                );
             }
 
-            const data = await result.json();
+            return response.json(); // 데이터 반환
+        },
+        onMutate: () => {
+            console.log("Mutation Start");
+        },
+        onSuccess: (data) => {
             setResult(data);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error occurred:", error.message);
-        }
-    }
+        },
+        onError: (error) => {
+            console.error("Error occurred:", error);
+        },
+    });
+
+    const findByID = (newValue) => {
+        mutation.mutate(newValue); // mutate 함수 호출
+    };
 
     return (
         <>
-            <form className="flex flex-col border-4">
-                <input
-                    type="text"
-                    placeholder="name"
-                    {...register("Full Name")}
-                />
+            <form className="flex flex-col border-4 mt-28">
+                <InputName register={register} />
                 <div className="flex-initial"></div>
-                <Select setInputValue={setInputValue} />
+                <SelectPosition setInputValue={setInputValue} />
                 <SearchButton
                     handleSubmit={handleSubmit}
-                    setLoading={setLoading}
                     setInputValue={setInputValue}
                     findByID={findByID}
                 />
-                <ViewList loading={loading} result={result} />
+                <div className="flex flex-col justify-center items-center">
+                    <ViewList loading={mutation.isLoading} result={result} />
+                </div>
             </form>
         </>
     );
