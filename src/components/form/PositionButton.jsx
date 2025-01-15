@@ -6,7 +6,7 @@ export default function PositionButton({ togglePosition, position }) {
         <>
             <button
                 type="button"
-                className={`p-2 border-2 ${isClicked ? "bg-slate-600" : "bg-slate-400"}`}
+                className={`p-2 border-2 rounded-xl border-black hover:opacity-70 ${isClicked ? "bg-slate-800" : "bg-slate-400"}`}
                 onClick={() => {
                     setIsClicked(!isClicked);
                     togglePosition(position);

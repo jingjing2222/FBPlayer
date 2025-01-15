@@ -64,8 +64,8 @@ export default function SelectPosition({ inputValueRef }) {
                     />
                 ))}
             </div>
-            <div className="flex flex-row items-start">
-                <div className="flex-initial my-1 px-1 border-2">
+            <div className="flex flex-row items-start m-2 justify-between">
+                <div className="flex-initial my-1 px-2 border-2 bg-teal-800 rounded-3xl text-slate-200 border-black">
                     {"선택된 포지션"}
                 </div>
                 <div className="flex-initial grid grid-cols-4">
@@ -73,7 +73,7 @@ export default function SelectPosition({ inputValueRef }) {
                         return (
                             <span
                                 key={idx}
-                                className="px-1 m-1 border-2 bg-orange-400 text-center"
+                                className="px-1 m-1 border-2 bg-orange-400 text-center rounded-2xl border-black"
                             >
                                 {position}
                             </span>

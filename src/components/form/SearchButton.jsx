@@ -8,10 +8,11 @@ export default function SearchButton({
     ErrorContext,
 }) {
     const { setIsError } = useContext(ErrorContext);
+
     return (
         <>
             <button
-                className="flex-initial w-auto bg-slate-400"
+                className="flex-initial w-auto bg-slate-400 border-2 border-black"
                 onClick={handleSubmit((data) => {
                     const prevValue = inputValueRef.current;
                     let newValue;
@@ -44,7 +45,7 @@ export default function SearchButton({
                     }
                 })}
             >
-                제출
+                검색
             </button>
         </>
     );
