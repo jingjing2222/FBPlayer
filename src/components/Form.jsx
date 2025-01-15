@@ -4,6 +4,7 @@ import SearchButton from "@/components/form/SearchButton";
 import SelectPosition from "@/components/form/SelectPosition";
 import ViewList from "@/components/form/ViewList";
 import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -54,7 +55,8 @@ export default function Form() {
 
     return (
         <>
-            <form className="flex flex-col border-4 mt-28 p-2 border-black bg-lime-700">
+            <Header />
+            <form className="flex flex-col border-4 p-2 border-black bg-lime-700">
                 <ErrorProvider>
                     <InputForm
                         register={register}
