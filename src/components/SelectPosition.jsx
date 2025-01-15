@@ -20,7 +20,7 @@ const defaultPosition = [
     "ST",
 ];
 
-export default function SelectPosition({ setInputValue }) {
+export default function SelectPosition({ inputValueRef }) {
     const [selectedPositions, setSelectedPositions] = useState([]);
 
     const togglePosition = (position) => {
@@ -29,17 +29,19 @@ export default function SelectPosition({ setInputValue }) {
                 const updatedPositions = prevPositions.filter(
                     (existingPosition) => existingPosition !== position
                 );
-                setInputValue((prevValue) => ({
+                const prevValue = inputValueRef;
+                inputValueRef = {
                     ...prevValue,
                     Position: updatedPositions,
-                }));
+                };
                 return updatedPositions;
             } else {
                 const updatedPositions = [...prevPositions, position];
-                setInputValue((prevValue) => ({
+                const prevValue = inputValueRef;
+                inputValueRef = {
                     ...prevValue,
                     Position: updatedPositions,
-                }));
+                };
                 return updatedPositions;
             }
         });

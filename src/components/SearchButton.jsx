@@ -1,19 +1,17 @@
 export default function SearchButton({
     handleSubmit,
-    setInputValue,
+    inputValueRef,
     findByID,
 }) {
     return (
         <button
             className="flex-initial w-auto bg-slate-400"
             onClick={handleSubmit((data) => {
-                // @ts-ignore
-                setInputValue((prevValue) => {
-                    const newValue = { ...prevValue, ...data };
-                    findByID(newValue);
-                    console.log(newValue);
-                    return newValue;
-                });
+                const prevValue = inputValueRef;
+                const newValue = { ...prevValue, ...data };
+                findByID(newValue);
+                console.log(newValue);
+                inputValueRef = newValue;
             })}
         >
             제출

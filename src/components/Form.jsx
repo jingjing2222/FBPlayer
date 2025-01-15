@@ -2,13 +2,14 @@ import InputName from "@/components/InputName";
 import SearchButton from "@/components/SearchButton";
 import SelectPosition from "@/components/SelectPosition";
 import ViewList from "@/components/ViewList";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 
 export default function Form() {
     console.log("Form re-rendered");
-    const [inputValue, setInputValue] = useState({
+
+    const inputValueRef = useRef({
         "Full Name": "",
         Nationality: "",
         Position: [],
@@ -57,10 +58,10 @@ export default function Form() {
             <form className="flex flex-col border-4 mt-28">
                 <InputName register={register} />
                 <div className="flex-initial"></div>
-                <SelectPosition setInputValue={setInputValue} />
+                <SelectPosition inputValueRef={inputValueRef.current} />
                 <SearchButton
                     handleSubmit={handleSubmit}
-                    setInputValue={setInputValue}
+                    inputValueRef={inputValueRef.current}
                     findByID={findByID}
                 />
                 <div className="flex flex-col justify-center items-center">
