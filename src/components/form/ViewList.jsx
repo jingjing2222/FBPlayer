@@ -7,13 +7,17 @@ export default function ViewList({ loading, result }) {
                 result &&
                 result[0] &&
                 result[0]["Full Name"] &&
-                result.map((each, idx) => {
+                result.map((each) => {
                     return (
                         <>
-                            <div className="flex-initial" key={idx}>
+                            <div
+                                className="flex-initial"
+                                key={`${each["Image Link"]}div`}
+                            >
                                 {each["Full Name"]}{" "}
                             </div>
                             <img
+                                key={each["Image Link"]}
                                 className="flex-initial w-16"
                                 src={`${each["Image Link"]}`}
                             ></img>

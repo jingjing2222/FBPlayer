@@ -1,7 +1,7 @@
-import InputName from "@/components/InputName";
-import SearchButton from "@/components/SearchButton";
-import SelectPosition from "@/components/SelectPosition";
-import ViewList from "@/components/ViewList";
+import InputForm from "@/components/form/InputForm";
+import SearchButton from "@/components/form/SearchButton";
+import SelectPosition from "@/components/form/SelectPosition";
+import ViewList from "@/components/form/ViewList";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -36,13 +36,10 @@ export default function Form() {
                 );
             }
 
-            return response.json(); // 데이터 반환
+            return response.json();
         },
-        onMutate: () => {
-            console.log("Mutation Start");
-        },
-        onSuccess: (data) => {
-            setResult(data);
+        onSuccess: (newResult) => {
+            setResult(newResult);
         },
         onError: (error) => {
             console.error("Error occurred:", error);
@@ -50,18 +47,28 @@ export default function Form() {
     });
 
     const findByID = (newValue) => {
-        mutation.mutate(newValue); // mutate 함수 호출
+        mutation.mutate(newValue);
     };
 
     return (
         <>
             <form className="flex flex-col border-4 mt-28">
-                <InputName register={register} />
+                <InputForm
+                    register={register}
+                    placeholder={"이름"}
+                    objectKey={"Full Name"}
+                />
+                <InputForm
+                    register={register}
+                    placeholder={"국가"}
+                    objectKey={"Nationality"}
+                />
+
                 <div className="flex-initial"></div>
-                <SelectPosition inputValueRef={inputValueRef.current} />
+                <SelectPosition inputValueRef={inputValueRef} />
                 <SearchButton
                     handleSubmit={handleSubmit}
-                    inputValueRef={inputValueRef.current}
+                    inputValueRef={inputValueRef}
                     findByID={findByID}
                 />
                 <div className="flex flex-col justify-center items-center">

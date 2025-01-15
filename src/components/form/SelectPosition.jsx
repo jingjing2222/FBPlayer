@@ -1,4 +1,4 @@
-import PositionButton from "@/components/PositionButton";
+import PositionButton from "@/components/form/PositionButton";
 import { useState } from "react";
 
 // 기본 포지션 배열
@@ -29,19 +29,21 @@ export default function SelectPosition({ inputValueRef }) {
                 const updatedPositions = prevPositions.filter(
                     (existingPosition) => existingPosition !== position
                 );
-                const prevValue = inputValueRef;
-                inputValueRef = {
+                const prevValue = inputValueRef.current;
+                inputValueRef.current = {
                     ...prevValue,
                     Position: updatedPositions,
                 };
+                console.log(inputValueRef.current);
                 return updatedPositions;
             } else {
                 const updatedPositions = [...prevPositions, position];
-                const prevValue = inputValueRef;
-                inputValueRef = {
+                const prevValue = inputValueRef.current;
+                inputValueRef.current = {
                     ...prevValue,
                     Position: updatedPositions,
                 };
+                console.log(inputValueRef.current);
                 return updatedPositions;
             }
         });
@@ -67,7 +69,7 @@ export default function SelectPosition({ inputValueRef }) {
                         return (
                             <span
                                 key={idx}
-                                className="px-1 m-1 border-2 bg-orange-400"
+                                className="px-1 m-1 border-2 bg-orange-400 text-center"
                             >
                                 {position}
                             </span>
