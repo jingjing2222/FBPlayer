@@ -46,7 +46,7 @@ export default function Form() {
         },
     });
 
-    const findByID = (newValue) => {
+    const findByFilters = (newValue) => {
         mutation.mutate(newValue);
     };
 
@@ -69,7 +69,7 @@ export default function Form() {
                 <SearchButton
                     handleSubmit={handleSubmit}
                     inputValueRef={inputValueRef}
-                    findByID={findByID}
+                    findByFilters={findByFilters}
                 />
                 <div className="flex flex-col justify-center items-center">
                     <ViewList loading={mutation.isLoading} result={result} />
