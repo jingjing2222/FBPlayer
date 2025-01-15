@@ -1,12 +1,13 @@
 import Nationality from "@/value/Nationality";
-import { useState } from "react";
+import { useContext } from "react";
 
 export default function SearchButton({
     handleSubmit,
     inputValueRef,
     findByFilters,
+    ErrorContext,
 }) {
-    const [showNoInput, setShowNoInput] = useState(false);
+    const { setIsError } = useContext(ErrorContext);
     return (
         <>
             <button
@@ -23,18 +24,20 @@ export default function SearchButton({
                             ...newData,
                             Position: prevValue.Position || [],
                         };
+                        setIsError("");
                         findByFilters(newValue);
                     } else {
                         // 국가 입력이 틀렸거나 안햇을 경우
                         if (data.Nationality.length > 0) {
                             //국가 입력했을때
-                            setShowNoInput(true);
+                            setIsError("국가명 틀림 재입력 요망");
                         } else {
                             // 국가 입력 안했을 경우 검색
                             newValue = {
                                 ...data,
                                 Position: prevValue.Position || [],
                             };
+                            setIsError("");
                             findByFilters(newValue);
                             inputValueRef.current = newValue;
                         }
@@ -43,11 +46,6 @@ export default function SearchButton({
             >
                 제출
             </button>
-            {showNoInput && (
-                <div className="flex-initial w-auto text-red-400 bg-stone-500 text-center">
-                    국가명 틀림 재입력 요망
-                </div>
-            )}
         </>
     );
 }

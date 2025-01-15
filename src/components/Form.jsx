@@ -1,4 +1,5 @@
-import InputForm from "@/components/form/InputForm";
+import { ErrorContext, ErrorProvider } from "@/components/form/ErrorContext";
+import { InputForm } from "@/components/form/InputForm";
 import SearchButton from "@/components/form/SearchButton";
 import SelectPosition from "@/components/form/SelectPosition";
 import ViewList from "@/components/form/ViewList";
@@ -53,27 +54,35 @@ export default function Form() {
     return (
         <>
             <form className="flex flex-col border-4 mt-28">
-                <InputForm
-                    register={register}
-                    placeholder={"이름"}
-                    objectKey={"Full Name"}
-                />
-                <InputForm
-                    register={register}
-                    placeholder={"국가"}
-                    objectKey={"Nationality"}
-                />
+                <ErrorProvider>
+                    <InputForm
+                        register={register}
+                        placeholder={"이름"}
+                        objectKey={"Full Name"}
+                        ErrorContext={ErrorContext}
+                    />
+                    <InputForm
+                        register={register}
+                        placeholder={"국가"}
+                        objectKey={"Nationality"}
+                        ErrorContext={ErrorContext}
+                    />
 
-                <div className="flex-initial"></div>
-                <SelectPosition inputValueRef={inputValueRef} />
-                <SearchButton
-                    handleSubmit={handleSubmit}
-                    inputValueRef={inputValueRef}
-                    findByFilters={findByFilters}
-                />
-                <div className="flex flex-col justify-center items-center">
-                    <ViewList loading={mutation.isLoading} result={result} />
-                </div>
+                    <div className="flex-initial"></div>
+                    <SelectPosition inputValueRef={inputValueRef} />
+                    <SearchButton
+                        handleSubmit={handleSubmit}
+                        inputValueRef={inputValueRef}
+                        findByFilters={findByFilters}
+                        ErrorContext={ErrorContext}
+                    />
+                    <div className="flex flex-col justify-center items-center">
+                        <ViewList
+                            loading={mutation.isLoading}
+                            result={result}
+                        />
+                    </div>
+                </ErrorProvider>
             </form>
         </>
     );
