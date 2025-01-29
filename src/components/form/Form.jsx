@@ -10,7 +10,13 @@ export default function Form() {
     console.log("Form re-rendered");
 
     const [result, setResult] = useState([]);
-    const { register, handleSubmit, setValue, getValues } = useForm();
+    const { register, handleSubmit, setValue, getValues } = useForm({
+        defaultValues: {
+            fullname: "",
+            nationality: "",
+            position: [],
+        },
+    });
 
     function searchClick(data) {
         console.log(data);

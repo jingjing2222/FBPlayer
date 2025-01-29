@@ -13,8 +13,10 @@ export function InputForm({ register, placeholder, objectKey }) {
                 className="flex-initial m-2 rounded-md px-1 border-black border-2"
                 {...register(objectKey)}
             />
-            {objectKey === "Nationality" && (
-                <div className="text-red-600 text-center mb-2">{isError}</div>
+            {objectKey === "nationality" && isError.isShow && (
+                <div className="text-red-600 text-center mb-2">
+                    {isError.content}
+                </div>
             )}
         </>
     );

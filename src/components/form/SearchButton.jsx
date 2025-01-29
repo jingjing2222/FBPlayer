@@ -8,7 +8,7 @@ export default function SearchButton({
     getValues,
     setValue,
 }) {
-    const { setIsError } = useContext(ErrorContext);
+    const { ErrorOn, ErrorOff } = useContext(ErrorContext);
 
     return (
         <>
@@ -19,16 +19,18 @@ export default function SearchButton({
                         !(data.nationality in Nationality) &&
                         data.nationality.length > 0
                     ) {
-                        setIsError("국가명 틀림 재입력 요망");
+                        console.log("국가명 틀림");
+                        ErrorOn();
                         return;
                     }
                     setValue(
                         "nationality",
                         data.nationality in Nationality
                             ? Nationality[data.nationality]
-                            : []
-                    ),
-                        searchClick(getValues());
+                            : ""
+                    );
+                    ErrorOff();
+                    searchClick(getValues());
                 })}
             >
                 검색
