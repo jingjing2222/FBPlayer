@@ -1,12 +1,9 @@
 import PlayerInform from "@/components/form/PlayerInform";
 
-export default function ViewList({ loading, result }) {
+export default function ViewList({ result }) {
     return (
         <>
-            {loading ? (
-                <div>{"loading..."}</div>
-            ) : (
-                result &&
+            {result &&
                 result[0] &&
                 result[0]["Full Name"] &&
                 result.map((eachInform, idx) => {
@@ -29,8 +26,7 @@ export default function ViewList({ loading, result }) {
                             <PlayerInform eachInform={eachInform} />
                         </div>
                     );
-                })
-            )}
+                })}
         </>
     );
 }

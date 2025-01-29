@@ -1,8 +1,9 @@
 // @ts-ignore
 
+import { ErrorContext } from "@/context/ErrorContext";
 import { useContext } from "react";
 
-export function InputForm({ register, placeholder, objectKey, ErrorContext }) {
+export function InputForm({ register, placeholder, objectKey }) {
     const { isError } = useContext(ErrorContext);
     return (
         <>

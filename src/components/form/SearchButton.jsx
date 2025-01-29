@@ -1,11 +1,12 @@
-import Nationality from "@/value/Nationality";
+import { ErrorContext } from "@/context/ErrorContext";
+import Nationality from "@/mock/Nationality";
 import { useContext } from "react";
 
 export default function SearchButton({
     handleSubmit,
-    inputValueRef,
-    findByFilters,
-    ErrorContext,
+    searchClick,
+    getValues,
+    setValue,
 }) {
     const { setIsError } = useContext(ErrorContext);
 
@@ -14,35 +15,20 @@ export default function SearchButton({
             <button
                 className="flex-initial w-auto bg-slate-400 border-2 border-black"
                 onClick={handleSubmit((data) => {
-                    const prevValue = inputValueRef.current;
-                    let newValue;
-                    if (data.Nationality in Nationality) {
-                        const newData = {
-                            ...data,
-                            Nationality: Nationality[data.Nationality],
-                        };
-                        newValue = {
-                            ...newData,
-                            Position: prevValue.Position || [],
-                        };
-                        setIsError("");
-                        findByFilters(newValue);
-                    } else {
-                        // 국가 입력이 틀렸거나 안햇을 경우
-                        if (data.Nationality.length > 0) {
-                            //국가 입력했을때
-                            setIsError("국가명 틀림 재입력 요망");
-                        } else {
-                            // 국가 입력 안했을 경우 검색
-                            newValue = {
-                                ...data,
-                                Position: prevValue.Position || [],
-                            };
-                            setIsError("");
-                            findByFilters(newValue);
-                            inputValueRef.current = newValue;
-                        }
+                    if (
+                        !(data.nationality in Nationality) &&
+                        data.nationality.length > 0
+                    ) {
+                        setIsError("국가명 틀림 재입력 요망");
+                        return;
                     }
+                    setValue(
+                        "nationality",
+                        data.nationality in Nationality
+                            ? Nationality[data.nationality]
+                            : []
+                    ),
+                        searchClick(getValues());
                 })}
             >
                 검색
