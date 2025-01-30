@@ -4,9 +4,9 @@ import Nationality from "@/mock/Nationality";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function Form() {
-    console.log("Form re-rendered");
+//주석을 추가합니다
 
+export default function Form() {
     const [result] = useState([]);
     const {
         register,
