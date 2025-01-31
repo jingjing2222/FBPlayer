@@ -6,7 +6,17 @@ import { useForm } from "react-hook-form";
 
 function searchClick(data) {
     const newData = { ...data, nationality: Nationality[data.nationality] };
-    console.log(newData);
+    const fullname = newData?.fullname ? `fullname=${newData?.fullname}` : ``;
+    const nationality = newData?.nationality
+        ? `nationality=${newData?.nationality}`
+        : ``;
+    const position = newData?.position
+        ? newData?.position.map((each) => `position=${each}`).join("&")
+        : ``;
+
+    console.log(fullname);
+    console.log(nationality);
+    console.log(position);
 }
 
 export default function Form() {
@@ -26,7 +36,10 @@ export default function Form() {
     });
 
     return (
-        <form className="flex flex-col border-4 p-2 border-black bg-lime-700">
+        <form
+            className="flex flex-col border-4 p-2 border-black bg-lime-700"
+            onSubmit={handleSubmit(searchClick)}
+        >
             <input
                 type="text"
                 placeholder={"이름"}
@@ -39,10 +52,11 @@ export default function Form() {
                 className="flex-initial m-2 rounded-md px-1 border-black border-2"
                 {...register("nationality", {
                     validate: {
-                        incorrectnationality: (data) =>
-                            data.length > 0 &&
-                            !(data in Nationality) &&
-                            "국가명 없음",
+                        ncorrectnationality: (data) => {
+                            if (data.length === 0) return true;
+                            if (data in Nationality) return true;
+                            return "국가명 없음";
+                        },
                     },
                 })}
             />
@@ -52,8 +66,8 @@ export default function Form() {
             <div className="flex-initial"></div>
             <SelectPosition setValue={setValue} />
             <button
+                type="submit"
                 className="flex-initial w-auto bg-slate-400 border-2 border-black"
-                onClick={handleSubmit(searchClick)}
             >
                 검색
             </button>
