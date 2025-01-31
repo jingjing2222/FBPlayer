@@ -6,21 +6,33 @@ import { useForm } from "react-hook-form";
 
 function searchClick(data) {
     const newData = { ...data, nationality: Nationality[data.nationality] };
-    const fullname = newData?.fullname ? `fullname=${newData?.fullname}` : ``;
+    const fullname = newData?.fullname ? `fullname=${newData?.fullname}&` : ``;
     const nationality = newData?.nationality
-        ? `nationality=${newData?.nationality}`
+        ? `nationality=${newData?.nationality}&`
         : ``;
-    const position = newData?.position
-        ? newData?.position.map((each) => `position=${each}`).join("&")
-        : ``;
+    const position =
+        newData?.position.length > 0
+            ? `${newData?.position.map((each) => `position=${each}`).join("&")}&`
+            : ``;
 
-    console.log(fullname);
-    console.log(nationality);
-    console.log(position);
+    return `${fullname}${nationality}${position}`;
+}
+
+async function fetchPlayer(data, setResult) {
+    const result = await fetch(
+        // @ts-ignore
+        `${import.meta.env.VITE_URL}/players?${searchClick(data)}offset=0&limit=20`,
+        {
+            method: "GET", // *GET, POST, PUT, DELETE 등
+        }
+    );
+
+    const response = await result.json();
+    setResult(response.data);
 }
 
 export default function Form() {
-    const [result] = useState([]);
+    const [result, setResult] = useState([]);
     const {
         register,
         handleSubmit,
@@ -38,7 +50,7 @@ export default function Form() {
     return (
         <form
             className="flex flex-col border-4 p-2 border-black bg-lime-700"
-            onSubmit={handleSubmit(searchClick)}
+            onSubmit={handleSubmit((data) => fetchPlayer(data, setResult))}
         >
             <input
                 type="text"
