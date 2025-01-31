@@ -4,7 +4,10 @@ import Nationality from "@/mock/Nationality";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-//주석을 추가합니다
+function searchClick(data) {
+    const newData = { ...data, nationality: Nationality[data.nationality] };
+    console.log(newData);
+}
 
 export default function Form() {
     const [result] = useState([]);
@@ -21,11 +24,6 @@ export default function Form() {
             position: [],
         },
     });
-
-    function searchClick(data) {
-        const newData = { ...data, nationality: Nationality[data.nationality] };
-        console.log(newData);
-    }
 
     return (
         <form className="flex flex-col border-4 p-2 border-black bg-lime-700">
