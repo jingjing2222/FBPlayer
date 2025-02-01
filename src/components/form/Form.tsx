@@ -128,6 +128,7 @@ export default function Form() {
             queryFn: ({ pageParam }) => fetchPlayer(searchData, pageParam),
             initialPageParam: 0,
             getNextPageParam: (lastPage) => {
+                if (lastPage.limit > lastPage.total) return null;
                 return lastPage.last_index + 1;
             },
             enabled: enabled,
@@ -178,8 +179,8 @@ export default function Form() {
             >
                 검색
             </button>
-            {enabled && isFetchingNextPage ? (
-                <div>Loading</div>
+            {enabled && status === "pending" ? (
+                <div className="text-center text-2xl">Loading...</div>
             ) : status === "error" ? (
                 <div>{`error`}</div>
             ) : (
@@ -188,14 +189,20 @@ export default function Form() {
                         <div className="flex flex-col justify-center items-center">
                             <ViewList result={allData} />
                         </div>
-                        <button
-                            className="text-lg bg-amber-500 border-4 mb-2 hover:bg-amber-700"
-                            onClick={() => {
-                                fetchNextPage();
-                            }}
-                        >
-                            More
-                        </button>
+                        {!isFetchingNextPage ? (
+                            <button
+                                className="text-lg bg-amber-500 border-4 mb-2 hover:bg-amber-700"
+                                onClick={() => {
+                                    fetchNextPage();
+                                }}
+                            >
+                                More
+                            </button>
+                        ) : (
+                            <div className="text-center text-2xl">
+                                Loading...
+                            </div>
+                        )}
                     </>
                 )
             )}
