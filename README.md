@@ -37,7 +37,7 @@
 
 #### react-query(useInfiniteQuery)
 
-<img src="https://i.ibb.co/7JCxTzp/2025-01-26-5-11-55.png" alt="Search Example" />
+<img src="https://i.ibb.co/VcDBQLSd/2025-02-01-9-26-43.gif" alt="Search Example" />
 
 -   최초 50명의 선수만 렌더 후, Load 클릭시 다음 페이지를 Fetch하여 추가 로드
 
