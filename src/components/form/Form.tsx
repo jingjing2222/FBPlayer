@@ -122,7 +122,7 @@ export default function Form() {
         },
     });
 
-    const { data, status, fetchNextPage, isFetchingNextPage } =
+    const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } =
         useInfiniteQuery({
             queryKey: ["fetchPlayer", searchData],
             queryFn: ({ pageParam }) => fetchPlayer(searchData, pageParam),
@@ -189,20 +189,21 @@ export default function Form() {
                         <div className="flex flex-col justify-center items-center">
                             <ViewList result={allData} />
                         </div>
-                        {!isFetchingNextPage ? (
-                            <button
-                                className="text-lg bg-amber-500 border-4 mb-2 hover:bg-amber-700"
-                                onClick={() => {
-                                    fetchNextPage();
-                                }}
-                            >
-                                More
-                            </button>
-                        ) : (
-                            <div className="text-center text-2xl">
-                                Loading...
-                            </div>
-                        )}
+                        {hasNextPage &&
+                            (!isFetchingNextPage ? (
+                                <button
+                                    className="text-lg bg-amber-500 border-4 mb-2 hover:bg-amber-700"
+                                    onClick={() => {
+                                        fetchNextPage();
+                                    }}
+                                >
+                                    More
+                                </button>
+                            ) : (
+                                <div className="text-center text-2xl">
+                                    Loading...
+                                </div>
+                            ))}
                     </>
                 )
             )}
