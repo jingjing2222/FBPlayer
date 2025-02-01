@@ -30,7 +30,9 @@ export default function SelectPosition({
         position: string[];
     }>;
 }) {
-    const [selectedPositions, setSelectedPositions] = useState([""]);
+    const [selectedPositions, setSelectedPositions] = useState<
+        string[] | undefined
+    >([]);
 
     const addPosition = (prevPositions: string[], position: string) => {
         const updatedPositions = prevPositions.filter(
@@ -46,10 +48,10 @@ export default function SelectPosition({
     }
 
     const togglePosition = (position: string) => {
-        setSelectedPositions((prevPositions: string[]) => {
-            return prevPositions.includes(position)
+        setSelectedPositions((prevPositions: string[] | undefined) => {
+            return prevPositions?.includes(position)
                 ? addPosition(prevPositions, position)
-                : deletePosition(prevPositions, position);
+                : deletePosition(prevPositions!, position);
         });
     };
 
@@ -69,7 +71,7 @@ export default function SelectPosition({
                     {"선택된 포지션"}
                 </div>
                 <div className="flex-initial grid grid-cols-4">
-                    {selectedPositions.map((position, idx) => {
+                    {selectedPositions?.map((position, idx) => {
                         return (
                             <span
                                 key={idx}

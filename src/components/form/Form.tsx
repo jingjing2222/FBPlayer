@@ -130,13 +130,13 @@ export default function Form() {
             <input
                 type="text"
                 placeholder={"이름"}
-                className="flex-initial rounded-md px-1 border-black border-2 m-2"
+                className="flex-initial rounded-md px-1 border-black border-2 m-2 bg-white"
                 {...register("fullname")}
             />
             <input
                 type="text"
                 placeholder={"국가"}
-                className="flex-initial m-2 rounded-md px-1 border-black border-2"
+                className="flex-initial m-2 rounded-md px-1 border-black border-2 bg-white"
                 {...register("nationality", {
                     validate: {
                         ncorrectnationality: (data) => {
