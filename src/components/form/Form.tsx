@@ -145,7 +145,7 @@ export default function Form() {
 
     return (
         <form
-            className="flex flex-col border-4 border-black bg-lime-700"
+            className="flex flex-col border-4 border-black bg-lime-700 h-auto"
             onSubmit={handleSubmit(search)}
         >
             <input
@@ -175,7 +175,7 @@ export default function Form() {
             <SelectPosition setValue={setValue} />
             <button
                 type="submit"
-                className="flex-initial w-auto bg-slate-400 border-2 hover:bg-slate-600 border-black"
+                className="flex-initial w-auto bg-slate-400 border-2 hover:bg-slate-600 border-black h-14"
             >
                 검색
             </button>
