@@ -1,50 +1,70 @@
-# React + TypeScript + Vite
+# Soccer Finder - 축구 선수 검색 웹사이트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[**배포된 사이트 링크!**](https://fbplayer.site/)
 
-Currently, two official plugins are available:
+## 작업자
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **frontend**: [jingjing2222](https://github.com/jingjing2222)
+-   **backend**: 'jg'
 
-## Expanding the ESLint configuration
+<br />
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 주요 기능
 
-- Configure the top-level `parserOptions` property like this:
+### 1) 축구선수 전체 검색
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+-   전체 선수 목록을 조회할 수 있습니다.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2) 이름 검색
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+-   선수 이름을 입력하여 해당 선수의 정보를 조회할 수 있습니다.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### 3) 포지션별 검색
+
+-   공격수, 미드필더, 수비수, 골키퍼 등 포지션을 선택하여 선수 목록을 필터링할 수 있습니다.
+
+### 4) 국가별 검색
+
+-   특정 국가를 선택하여 해당 국가 선수 목록을 필터링할 수 있습니다.
+
+<br />
+
+---
+
+## 상세 기능
+
+### Read
+
+#### react-query(useInfiniteQuery)
+
+<img src="https://i.ibb.co/7JCxTzp/2025-01-26-5-11-55.png" alt="Search Example" />
+
+-   최초 50명의 선수만 렌더 후, Load 클릭시 다음 페이지를 Fetch하여 추가 로드
+
+---
+
+## 📌 기술 스택 (Tech Stack)
+
+### 🏗️ 프레임워크 & 라이브러리
+
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=reactrouter&logoColor=white)
+![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=flat&logo=react-query&logoColor=white)
+![react-hook-form](https://img.shields.io/badge/react--hook--form-EC5990?style=flat&logo=reacthookform&logoColor=white)
+
+### 🎨 스타일링
+
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![tailwindcss-animate](https://img.shields.io/badge/TailwindCSS_Animate-06B6D4?style=flat)
+
+### 🛠️ 개발 환경 & 도구
+
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white)
+
+### ✨ ESLint & 코드 스타일링
+
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)
+![TypeScript ESLint](https://img.shields.io/badge/TypeScript_ESLint-3178C6?style=flat)
