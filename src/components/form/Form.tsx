@@ -1,8 +1,9 @@
 import SelectPosition from "@/components/form/SelectPosition";
 import ViewList from "@/components/form/ViewList";
 import Nationality from "@/mock/Nationality";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface DataType {
@@ -89,25 +90,24 @@ function searchClick(data: DataType) {
     return `${fullname}${nationality}${position}`;
 }
 
-async function fetchPlayer(
-    data: DataType,
-    setResult: React.Dispatch<React.SetStateAction<Player[]>>
-) {
+async function fetchPlayer(data: DataType | undefined, pageParam: number) {
     const result = await fetch(
         `${import.meta.env.VITE_URL}/players?${searchClick(
-            data
-        )}offset=0&limit=20`,
+            data!
+        )}offset=${pageParam}&limit=50`,
         {
             method: "GET",
         }
     );
+    console.log(pageParam);
 
     const response = await result.json();
-    setResult(response.data);
+    return response;
 }
 
 export default function Form() {
-    const [result, setResult] = useState<Player[]>([]);
+    const [searchData, setSearchData] = useState<DataType | undefined>({});
+    const [enabled, setEnabled] = useState(false);
     const {
         register,
         handleSubmit,
@@ -122,10 +122,30 @@ export default function Form() {
         },
     });
 
+    const { data, status, fetchNextPage, isFetchingNextPage } =
+        useInfiniteQuery({
+            queryKey: ["fetchPlayer", searchData],
+            queryFn: ({ pageParam }) => fetchPlayer(searchData, pageParam),
+            initialPageParam: 0,
+            getNextPageParam: (lastPage) => {
+                return lastPage.last_index + 1;
+            },
+            enabled: enabled,
+        });
+
+    const search = (data: SetStateAction<DataType | undefined>) => {
+        setSearchData(data);
+        if (!enabled) setEnabled(true);
+    };
+
+    const allData: Player[] | undefined = data?.pages.flatMap(
+        (page) => page.data
+    );
+
     return (
         <form
             className="flex flex-col border-4 border-black bg-lime-700"
-            onSubmit={handleSubmit((data) => fetchPlayer(data, setResult))}
+            onSubmit={handleSubmit(search)}
         >
             <input
                 type="text"
@@ -154,13 +174,31 @@ export default function Form() {
             <SelectPosition setValue={setValue} />
             <button
                 type="submit"
-                className="flex-initial w-auto bg-slate-400 border-2 border-black"
+                className="flex-initial w-auto bg-slate-400 border-2 hover:bg-slate-600 border-black"
             >
                 검색
             </button>
-            <div className="flex flex-col justify-center items-center">
-                <ViewList result={result} />
-            </div>
+            {enabled && isFetchingNextPage ? (
+                <div>Loading</div>
+            ) : status === "error" ? (
+                <div>{`error`}</div>
+            ) : (
+                status === "success" && (
+                    <>
+                        <div className="flex flex-col justify-center items-center">
+                            <ViewList result={allData} />
+                        </div>
+                        <button
+                            className="text-lg bg-amber-500 border-4 mb-2 hover:bg-amber-700"
+                            onClick={() => {
+                                fetchNextPage();
+                            }}
+                        >
+                            More
+                        </button>
+                    </>
+                )
+            )}
         </form>
     );
 }

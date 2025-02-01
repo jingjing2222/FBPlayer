@@ -59,7 +59,7 @@ interface Player {
     "Goalkeeper Reflexes": number;
 }
 
-export default function ViewList({ result }: { result: Player[] }) {
+export default function ViewList({ result }: { result: Player[] | undefined }) {
     return (
         <>
             {result &&
@@ -70,9 +70,6 @@ export default function ViewList({ result }: { result: Player[] }) {
                             className="flex-initial flex flex-col items-center border-2 border-black min-w-96 w-auto h-auto my-1 bg-violet-600 bg-opacity-60 pb-2"
                             key={idx}
                         >
-                            <button onClick={() => console.log(eachInform)}>
-                                출력
-                            </button>
                             <div
                                 className="flex-initial font-serif font-bold text-lg"
                                 key={`${eachInform["Image Link"]}div`}

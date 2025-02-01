@@ -75,13 +75,15 @@ export default function PlayerInform({ eachInform }: { eachInform: Player }) {
                 <div>
                     {Object.entries(eachInform).map(([key, value]) => (
                         <div
-                            className="bg-slate-300 my-1 rounded-xl px-3 mx-3 flex justify-between"
+                            className="bg-slate-300 my-1 rounded-xl px-3 mx-3 flex justify-between w-72"
                             key={key}
                         >
-                            <span className="text-blue-500 font-bold">
+                            <span className="text-blue-500 font-bold overflow-auto">
                                 {key}:
                             </span>
-                            <span className="text-black">{value}</span>
+                            <span className="text-black overflow-y-auto">
+                                {value}
+                            </span>
                         </div>
                     ))}
                 </div>
