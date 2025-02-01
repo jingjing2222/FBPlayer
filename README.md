@@ -1,4 +1,4 @@
-# Soccer Finder - 축구 선수 검색 웹사이트
+# FBplayer - 축구 선수 검색 웹사이트
 
 [**배포된 사이트 링크!**](https://fbplayer.site/)
 
