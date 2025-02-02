@@ -5,7 +5,7 @@
 ## 작업자
 
 -   **frontend**: [jingjing2222](https://github.com/jingjing2222)
--   **backend**: 'jg'
+-   **backend**: [GJK111](https://github.com/GJK1117)
 
 <br />
 
